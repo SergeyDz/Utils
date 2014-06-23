@@ -1,7 +1,7 @@
 @echo off
 
 set sourceServer=fgsqlkiev-02.fg.local\dev
-set sourceDB=_CCNet_Dev_Nutter
+set sourceDB=Flow_OMM_Dev
 
 set targetServer=fgsqlkiev-02.fg.local\dev
 set targetDB=opendb_sdzyuban
@@ -32,18 +32,22 @@ IF %%~zf GTR 2 "%isql%" -S %sourceServer%  -d %sourceDB% -r1 -e  -i "%%f" >>log.
 if not "%errorlevel%" == "0" set BatchExitCode=%errorlevel%
 ::pause
 
-
 for  %%f IN ("%rootDirectory%*FormXml.sql") do (echo %%f 
 echo ----- %%f ----- >>log.txt
 echo ----- %%f ----- >>err.txt
-IF %%~zf GTR 2 "%isql%"  -S %sourceServer%  -d %sourceDB% -v formname=%targetFormName% -h-1 -y 0   -i "%%f" -o "%rootDirectory%_CreateXmlDataOutput.sql" >>log.txt  2>>err.txt)
+IF %%~zf GTR 2 "%isql%"  -S %sourceServer%  -d %sourceDB% -v formname=%targetFormName%  -i "%%f"  >>log.txt  2>>err.txt)
 if not "%errorlevel%" == "0" set BatchExitCode=%errorlevel%
+::pause
+
+echo ----- "select Value from [Open].[FormDefinitions]" ----- >>log.txt
+echo ----- "select Value from [Open].[FormDefinitions]" ----- >>err.txt
+bcp.exe "select Value from [Open].[FormDefinitions]" queryout "%rootDirectory%_OpenFormXmlDataOutput.sql" -S %sourceServer%  -d %sourceDB%  -T -c
 ::pause
 
 for  %%f IN ("%rootDirectory%_*XmlDataOutput.sql") do (echo %%f 
 echo ----- %%f ----- >>log.txt
 echo ----- %%f ----- >>err.txt
-IF %%~zf GTR 2 "%isql%"  -S %targetServer%  -d %targetDB% -h-1 -y 0   -i "%%f">>log.txt  2>>err.txt)
+IF %%~zf GTR 2 "%isql%"  -S %targetServer%  -d %targetDB% -r1 -e -i "%%f">>log.txt  2>>err.txt)
 if not "%errorlevel%" == "0" set BatchExitCode=%errorlevel%
 ::pause
 

@@ -5,4 +5,5 @@ EXEC	 [Open].[ModifyOpenFormByName] @FormName = N'RequestEditor'
 declare @script nvarchar(max)
 declare @form nvarchar(max) = (select top 1 cast(v as nvarchar(MAX)) from @t)
 set @script = 'update FormDefinitions set DevelopmentDefinitionXml = '''+@form+''' where Name = ''$(formname)'''
-select @script
+delete [Open].[FormDefinitions] 
+insert into [Open].[FormDefinitions] (Code, Name, Value) values ('OpenForm', 'Open Form', @script)

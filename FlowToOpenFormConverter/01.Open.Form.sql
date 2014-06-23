@@ -13,6 +13,16 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[Fo
 		[Name] [varchar](255) NULL,
 		[Value] [xml] 
 	)
+	
+GO
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[FormDefinitions]'))
+	create table [Open].[FormDefinitions]
+	(
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Code] [varchar](255) NOT NULL,
+		[Name] [varchar](255) NULL,
+		[Value] [varchar] (MAX) 
+	)
 
 IF NOT EXISTS(select * FROM sys.views where name = 'getNewID')
 begin
@@ -92,21 +102,27 @@ insert into [Open].[Form] (Code, Name, Value)
 							<Conditions xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
 						</ReadOnlyConditions>
 					</d5p1:DisplayCriteria>
-					<d5p1:DisplayWidth>Half</d5p1:DisplayWidth>
+					<d5p1:DisplayWidth>Full</d5p1:DisplayWidth>
 					<d5p1:HelpText i:nil="true" />
-					<d5p1:Id>146b4387d5b-229-6017b3477f</d5p1:Id>
+					<d5p1:Id>146c82af064-22b-122459c77c1</d5p1:Id>
 					<d5p1:Name />
 					<d5p1:ParentQuestionId i:nil="true" />
 					<d5p1:ReadOnly>false</d5p1:ReadOnly>
 					<d5p1:RequestFieldType>None</d5p1:RequestFieldType>
 					<d5p1:RequirementCriteria i:nil="true" />
 					<d5p1:ShowRequiredIndicator>false</d5p1:ShowRequiredIndicator>
-					<d5p1:Title>Test Question</d5p1:Title>
+					<d5p1:Title>Q1</d5p1:Title>
 					<d5p1:ValueIntegrationDefinition xmlns:d6p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions.Integrations" i:nil="true" />
 					<d5p1:DefaultValue i:nil="true" />
-					<d5p1:AllowDecimals>true</d5p1:AllowDecimals>
-					<d5p1:MaxValue i:nil="true" />
-					<d5p1:MinValue i:nil="true" />
+					<d5p1:AllowAlphaCharacters>true</d5p1:AllowAlphaCharacters>
+					<d5p1:AllowCustomCharacters>false</d5p1:AllowCustomCharacters>
+					<d5p1:AllowNumericCharacters>true</d5p1:AllowNumericCharacters>
+					<d5p1:AllowRichTextFormatting>false</d5p1:AllowRichTextFormatting>
+					<d5p1:AllowSpecialCharacters>true</d5p1:AllowSpecialCharacters>
+					<d5p1:CharacterLimit>0</d5p1:CharacterLimit>
+					<d5p1:CustomExpression />
+					<d5p1:DefaultFormat />
+					<d5p1:TextInputMode>SingleLine</d5p1:TextInputMode>
 				</FormComponentItem>')
 		
 		
@@ -152,33 +168,39 @@ insert into [Open].[Form] (Code, Name, Value)
 		xmlns:d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions"
 		>
 							<ContainerSortOrder>0</ContainerSortOrder>
-							<d5p1:DisplayCriteria>
-								<HideConditions xmlns:d9p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
-									<AdvancedExpression i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
-									<CollectionType xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions">All</CollectionType>
-									<Conditions xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
-								</HideConditions>
-								<ReadOnlyConditions xmlns:d9p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
-									<AdvancedExpression i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
-									<CollectionType xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions">All</CollectionType>
-									<Conditions xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
-								</ReadOnlyConditions>
-							</d5p1:DisplayCriteria>
-							<d5p1:DisplayWidth>Half</d5p1:DisplayWidth>
-							<d5p1:HelpText i:nil="true" />
-							<d5p1:Id>146b4b054b1-235-11db57855b5</d5p1:Id>
-							<d5p1:Name />
-							<d5p1:ParentQuestionId i:nil="true" />
-							<d5p1:ReadOnly>false</d5p1:ReadOnly>
-							<d5p1:RequestFieldType>None</d5p1:RequestFieldType>
-							<d5p1:RequirementCriteria i:nil="true" />
-							<d5p1:ShowRequiredIndicator>false</d5p1:ShowRequiredIndicator>
-							<d5p1:Title>Untitled question</d5p1:Title>
-							<d5p1:ValueIntegrationDefinition xmlns:d8p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions.Integrations" i:nil="true" />
-							<d5p1:DefaultValue i:nil="true" />
-							<d5p1:AllowDecimals>true</d5p1:AllowDecimals>
-							<d5p1:MaxValue i:nil="true" />
-							<d5p1:MinValue i:nil="true" />
-						</d5p1:Question>')
+					<d5p1:DisplayCriteria>
+						<HideConditions xmlns:d7p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
+							<AdvancedExpression i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
+							<CollectionType xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions">All</CollectionType>
+							<Conditions xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
+						</HideConditions>
+						<ReadOnlyConditions xmlns:d7p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
+							<AdvancedExpression i:nil="true" xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
+							<CollectionType xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions">All</CollectionType>
+							<Conditions xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Expressions" />
+						</ReadOnlyConditions>
+					</d5p1:DisplayCriteria>
+					<d5p1:DisplayWidth>Full</d5p1:DisplayWidth>
+					<d5p1:HelpText i:nil="true" />
+					<d5p1:Id>146c82af064-22b-122459c77c1</d5p1:Id>
+					<d5p1:Name />
+					<d5p1:ParentQuestionId i:nil="true" />
+					<d5p1:ReadOnly>false</d5p1:ReadOnly>
+					<d5p1:RequestFieldType>None</d5p1:RequestFieldType>
+					<d5p1:RequirementCriteria i:nil="true" />
+					<d5p1:ShowRequiredIndicator>false</d5p1:ShowRequiredIndicator>
+					<d5p1:Title>Q1</d5p1:Title>
+					<d5p1:ValueIntegrationDefinition xmlns:d6p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions.Integrations" i:nil="true" />
+					<d5p1:DefaultValue i:nil="true" />
+					<d5p1:AllowAlphaCharacters>true</d5p1:AllowAlphaCharacters>
+					<d5p1:AllowCustomCharacters>false</d5p1:AllowCustomCharacters>
+					<d5p1:AllowNumericCharacters>true</d5p1:AllowNumericCharacters>
+					<d5p1:AllowRichTextFormatting>false</d5p1:AllowRichTextFormatting>
+					<d5p1:AllowSpecialCharacters>true</d5p1:AllowSpecialCharacters>
+					<d5p1:CharacterLimit>0</d5p1:CharacterLimit>
+					<d5p1:CustomExpression />
+					<d5p1:DefaultFormat />
+					<d5p1:TextInputMode>SingleLine</d5p1:TextInputMode>
+				</d5p1:Question>')
 								
 		

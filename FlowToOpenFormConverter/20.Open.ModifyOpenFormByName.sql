@@ -39,11 +39,18 @@ BEGIN
 		BEGIN
 	    
 			declare @elementName varchar(255) = (select top 1 Name from UI.Element where Id = @elementId)
-			declare @elementLabel varchar(max)= (select top 1 val.Value from UI.Element e
-				inner join UI.ElementPropertyValue epv on e.Id = epv.ElementId
-				inner join UI.Property p on p.Id = epv.PropertyId
-				inner join UI.ElementPropertyValue val on val.ElementId = e.Id
-				 where p.Name = 'Label' and e.Id = @elementId)
+			declare @elementLabel varchar(max)
+			
+			exec @elementLabel = [Open].[GetElementPropertyByCode] @elementId, 'Label'
+			
+		    if (@elementLabel is null or @elementLabel = '') 
+		    begin
+				set @elementLabel = @elementName 
+			end
+			
+			set @elementLabel = (select replace(@elementLabel, N'’', '`'))
+			set @elementLabel = (select replace(@elementLabel, N'''', '`'))
+			
 			
 			declare @section XML =  (select Value from [Open].[Form] where Code = 'EmptySectionTemplate')
 			set @section.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";

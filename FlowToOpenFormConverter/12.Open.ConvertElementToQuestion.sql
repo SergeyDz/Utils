@@ -25,8 +25,7 @@ BEGIN
 	if (@control = 'TextBox')
 	begin
 	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:TextInputQuestion"')
+	exec @question = [Open].[ConvertTextBoxToQuestion] @question,  @elementId	
 					  
 	end
 	
