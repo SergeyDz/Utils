@@ -1,12 +1,14 @@
-Mon 06/23/2014 
-04:03 PM
+Tue 06/24/2014 
+07:44 PM
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\01.Open.Form.sql ----- 
+----- C:\Projects\git\Utils\FlowToOpenFormConverter\08.Open.GetFlowChildElement.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\09.Open.GetElementPropertyByCode.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\10.Open.ConvertTextBoxToQuestion.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\11.Open.SetQuestionBasicProperties.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\12.Open.ConvertElementToQuestion.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\13.Open.FetchOpenElelmentsBySectionId.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\20.Open.ModifyOpenFormByName.sql ----- 
+----- C:\Projects\git\Utils\FlowToOpenFormConverter\30.Open.NormalizeFlowUIForm.sql ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\GenerateFormXml.sql ----- 
 ----- "select Value from [Open].[FormDefinitions]" ----- 
 ----- C:\Projects\git\Utils\FlowToOpenFormConverter\_OpenFormXmlDataOutput.sql ----- 

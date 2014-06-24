@@ -23,6 +23,18 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[Fo
 		[Name] [varchar](255) NULL,
 		[Value] [varchar] (MAX) 
 	)
+	
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[FlowFormNormalized]'))
+create table [Open].[FlowFormNormalized]
+(
+	Id int identity(1,1),
+	ElementId int, 
+	ElementName varchar(2000),
+	ParentId int,
+	Control varchar(255)
+)
 
 IF NOT EXISTS(select * FROM sys.views where name = 'getNewID')
 begin

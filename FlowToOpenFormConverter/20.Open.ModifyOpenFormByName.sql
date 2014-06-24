@@ -23,11 +23,9 @@ BEGIN
 	
 	
 	DECLARE sectionCursor CURSOR FOR
-	select e.id from UI.Form f
-	inner join UI.Element e on e.FormId = f.Id 
-	inner join UI.Control c on c.Id = e.ControlId 
-	where f.Name like '%Request%Editor%' and c.Name = 'Section'  
-	order by e.Row, e.Id
+	select ElementId from [Open].[FlowFormNormalized]  
+	where Control = 'Section' 
+	order by Id
 	
 	declare @elementId int 
 	

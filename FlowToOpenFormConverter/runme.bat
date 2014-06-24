@@ -1,7 +1,7 @@
 @echo off
 
 set sourceServer=fgsqlkiev-02.fg.local\dev
-set sourceDB=Flow_OMM_Dev
+set sourceDB=_CCNet_Dev_Nutter
 
 set targetServer=fgsqlkiev-02.fg.local\dev
 set targetDB=opendb_sdzyuban

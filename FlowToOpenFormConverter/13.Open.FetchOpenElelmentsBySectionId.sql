@@ -22,10 +22,9 @@ BEGIN
 		
 	
 	DECLARE elementCursor CURSOR FOR
-	select e.Id, e.Name, c.Name from UI.Element e 
-	inner join UI.Control c on c.Id = e.ControlId 
-	where e.ParentId = @SectionId
-	order by e.Row, e.Id
+	select ElementId, ElementName, Control from [Open].[FlowFormNormalized] 
+	where ParentId = @SectionId
+	order by id
 	
 	declare @elementId int 
 	declare @elementName varchar(max) 
