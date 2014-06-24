@@ -7,6 +7,6 @@
 			where f.Name = 'Request Editor' and c.code = 'SectionContainer'
 			order by e.Row, e.Id)
 			
-	exec [Open].[GetFlowChildElement] @sectionContainerId, 0
+	exec [Open].[GetFlowChildElement] @sectionContainerId, @sectionContainerId, 0
 
 	--

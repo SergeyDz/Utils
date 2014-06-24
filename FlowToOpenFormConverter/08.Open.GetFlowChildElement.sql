@@ -7,16 +7,19 @@ GO
 
 -- =============================================
 -- Author:		<Sergey Dzyuban>
--- Create date: <2014-06-19>
--- Description:	<Set basic properties like Title and IDs>
+-- Create date: <2014-06-24>
+-- Description:	<Normalize UI form to include only 1 nested level. Open don't support child-nesting levels>
 -- =============================================
 CREATE PROCEDURE [Open].[GetFlowChildElement]
 (
 	@parentElementId int,
+	@newParentElementId int,
 	@level int
 )
 AS
 BEGIN
+
+	set @level = @level + 1
 	
 	declare @elementId int
 	declare @elementName varchar(2000)
@@ -35,13 +38,19 @@ BEGIN
 			
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
-		
-		insert into [Open].[FlowFormNormalized] (ElementId, ElementName, ParentId, Control) 
-		values 
-		(@elementId, @elementName, @parentElementId, @controlName)	
-		
-		exec  [Open].[GetFlowChildElement] @elementId, @level
-		
+
+		if((@level > 1 and @controlName = 'Panel') OR (@level > 2 and @controlName = 'Fieldset'))
+		begin
+			exec  [Open].[GetFlowChildElement] @elementId, @newParentElementId, @level
+		end
+		else
+		begin
+			insert into [Open].[FlowFormNormalized] (ElementId, ElementName, ParentId, Control) 
+			values 
+			(@elementId, @elementName, @newParentElementId, @controlName)	
+			
+			exec  [Open].[GetFlowChildElement] @elementId, @elementId, @level
+		end
 		FETCH NEXT FROM childrenCursor 
 				INTO @elementId, @elementName, @controlName
 		END 
