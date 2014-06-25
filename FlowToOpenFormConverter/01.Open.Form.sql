@@ -100,7 +100,8 @@ insert into [Open].[Form] (Code, Name, Value)
 	i:type="d5p1:NumericInputQuestion"  
 	xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms"
 	xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+	xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/"
+	xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
 					<ContainerSortOrder>0</ContainerSortOrder>
 					<d5p1:DisplayCriteria>
 						<HideConditions xmlns:d7p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
@@ -135,6 +136,9 @@ insert into [Open].[Form] (Code, Name, Value)
 					<d5p1:CustomExpression />
 					<d5p1:DefaultFormat />
 					<d5p1:TextInputMode>SingleLine</d5p1:TextInputMode>
+					<d5p1:SubQuestionNames />
+					<d5p1:SubQuestions />	
+					
 				</FormComponentItem>')
 		
 		
@@ -178,7 +182,7 @@ insert into [Open].[Form] (Code, Name, Value)
 		xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/"
 		xmlns:d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions"
-		>
+		xmlns:d6p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
 							<ContainerSortOrder>0</ContainerSortOrder>
 					<d5p1:DisplayCriteria>
 						<HideConditions xmlns:d7p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Conditions">
@@ -213,6 +217,8 @@ insert into [Open].[Form] (Code, Name, Value)
 					<d5p1:CustomExpression />
 					<d5p1:DefaultFormat />
 					<d5p1:TextInputMode>SingleLine</d5p1:TextInputMode>
+					<d5p1:SubQuestionNames />
+					<d5p1:SubQuestions />	
 				</d5p1:Question>')
 								
 		
