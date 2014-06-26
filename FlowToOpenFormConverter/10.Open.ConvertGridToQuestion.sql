@@ -21,6 +21,7 @@ BEGIN
 		declare @childElementId int 
 		declare @elementName varchar(max) 
 		declare @controlName varchar(255) 
+		declare @elementLabel varchar(max)
 		
 		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					  declare namespace d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions";
@@ -35,14 +36,14 @@ BEGIN
 		declare @gridEditorId int = (select top 1 ElementId from [Open].[FlowFormNormalized] where ParentId = @elementId and Control = 'GridColumns' ) 
 		
 		DECLARE gridItemsCursor CURSOR FOR
-		select ElementId, ElementName, Control from [Open].[FlowFormNormalized] 
+		select ElementId, ElementName, ElementLabel, Control from [Open].[FlowFormNormalized] 
 		where ParentId = @gridEditorId
 		order by Id
 		
 			open gridItemsCursor
 	
 	FETCH NEXT FROM gridItemsCursor 
-			INTO @childElementId, @elementName, @controlName
+			INTO @childElementId, @elementName, @elementLabel, @controlName
 	WHILE @@FETCH_STATUS = 0
 		BEGIN
 			set @gridNestedElement = (select Value from [Open].[Form] where Code = 'GridQuestionTemplate')
@@ -62,9 +63,17 @@ BEGIN
 					  declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
 					  replace value of (//child::*:Key/*:Id/text()) [1]  with sql:variable("@question_guid")')	
 			
-			
-					  
+ 
 			exec @gridNestedElement = [Open].[ConvertElementToQuestion] @gridNestedElement, @childElementId
+			--LABEL
+			set @gridNestedElement.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					  declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
+					  replace value of (//child::*:Key/*:Title/text()) [1]  with sql:variable("@elementLabel")')
+			set @gridNestedElement.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					  declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
+					  replace value of (//child::*:Value/text()) [1]  with sql:variable("@elementLabel")')	
+			
+			
 			
 			set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					  declare namespace d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions";
@@ -90,7 +99,7 @@ BEGIN
 			
 				  
 			FETCH NEXT FROM gridItemsCursor 
-				INTO @childElementId, @elementName, @controlName
+				INTO @childElementId, @elementName, @elementLabel, @controlName
 		END 
 	CLOSE gridItemsCursor;
 	DEALLOCATE gridItemsCursor;
