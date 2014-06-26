@@ -21,66 +21,64 @@ AS
 BEGIN
 			
 	declare @control varchar(255) = (select top 1 c.Code from UI.Element e inner join UI.Control c on e.ControlId = c.id where e.Id = @elementId)
+	declare @controlTypeDefinition varchar(255) = 'd5p1:TextInputQuestion'
 
 	if (@control = 'TextBox')
 	begin
+		set @controlTypeDefinition  = 'd5p1:TextInputQuestion'
 		exec @question = [Open].[ConvertTextBoxToQuestion] @question,  @elementId				  
 	end
 	
 	if (@control = 'RadioList')
 	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:BooleanRadioButtonInputQuestion"')
-					  
+		set @controlTypeDefinition  = 'd5p1:BooleanRadioButtonInputQuestion'
+			  
 	end
 	
 	if (@control = 'ComboBox')
-	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:DropdownListInputQuestion"')
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (/*:KeyValueOfQuestionstringHQ4y65Wg/*:Key/@*:type) [1]  with "d5p1:DropdownListInputQuestion"')
-					  
+	begin	 
+	 	set @controlTypeDefinition  = 'd5p1:DropdownListInputQuestion'
+
 	end
 	
 	if (@control = 'CheckBox')
 	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:BooleanCheckboxInputQuestion"')
-					  
+		set @controlTypeDefinition  = 'd5p1:BooleanCheckboxInputQuestion'
+			  
 	end
 	
 	if (@control = 'DatePicker')
 	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:DateTimeInputQuestion"')
-					  
+		set @controlTypeDefinition  = 'd5p1:DateTimeInputQuestion'
+			  
 	end
 	
 	if (@control = 'Label')
 	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:TextInputQuestion"')
-					  
+		set @controlTypeDefinition  = 'd5p1:TextInputQuestion'
+			  
 	end
 	
 	if (@control = 'NumberEditor' or @control = 'PercentEditor' or  @control = 'MoneyEditor')
 	begin
-	
-		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					  replace value of (//@*:type) [1]  with "d5p1:NumericInputQuestion"')
-					  
+		set @controlTypeDefinition  = 'd5p1:TextInputQuestion'
+			  
 	end
 	
 	if (@control = 'Grid')
 	begin
-		exec @question = [Open].[ConvertGridToQuestion] @question,  @elementId			  
-	end			  
+		set @controlTypeDefinition  = 'd5p1:MultiColumnListInputQuestion'
+		exec @question = [Open].[ConvertGridToQuestion] @question,  @elementId	
+
+	end	
+	
+	if(@control in ( 'RadioList','DatePicker','Label', 'ComboBox', 'NumberEditor' , 'PercentEditor' ,'MoneyEditor'))	
+	begin
+		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					  replace value of (//@*:type) [1]  with sql:variable("@controlTypeDefinition") ')
+		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					  replace value of (//*:Key/@*:type) [1]  with sql:variable("@controlTypeDefinition") ')
+	end	  
 	return @question
 END
 GO
