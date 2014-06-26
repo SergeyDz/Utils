@@ -19,10 +19,11 @@ BEGIN
 	
 	declare @form XML
 	declare  @i int = 0
+	declare @elementLabel varchar(max)
 		
 	
 	DECLARE elementCursor CURSOR FOR
-	select ElementId, ElementName, Control from [Open].[FlowFormNormalized] 
+	select ElementId, ElementName, ElementLabel, Control from [Open].[FlowFormNormalized] 
 	where ParentId = @SectionId
 	order by id
 	
@@ -33,21 +34,9 @@ BEGIN
 	open elementCursor
 	
 	FETCH NEXT FROM elementCursor 
-			INTO @elementId, @elementName, @controlName
+			INTO @elementId, @elementName, @elementLabel, @controlName
 	WHILE @@FETCH_STATUS = 0
-		BEGIN
-
-			declare @elementLabel varchar(max)
-			exec @elementLabel = [Open].[GetElementPropertyByCode] @elementId, 'Label'
-				 
-			if (@elementLabel is null or @elementLabel = '') 
-			begin
-				set @elementLabel = @elementName 
-			end
-			
-			set @elementLabel = (select replace(@elementLabel, N'’', '`'))
-			set @elementLabel = (select replace(@elementLabel, N'''', '`'))
-					  	 
+		BEGIN		  	 
 			--QUESTION	
 			declare @question_guid uniqueidentifier = (select new_id from getNewID)		
 			  
@@ -92,7 +81,7 @@ BEGIN
 			
 			
 			FETCH NEXT FROM elementCursor 
-				INTO @elementId, @elementName, @controlName
+				INTO @elementId, @elementName, @elementLabel, @controlName
 		END 
 	CLOSE elementCursor;
 	DEALLOCATE elementCursor;

@@ -24,6 +24,7 @@ BEGIN
 	declare @elementId int
 	declare @elementName varchar(2000)
 	declare @controlName varchar(250)
+	declare @elementLabel varchar(max) 
 	
 	declare childrenCursor cursor LOCAL  for 
 	select e.id, e.Name, c.Code from UI.Element e 
@@ -45,9 +46,19 @@ BEGIN
 		end
 		else
 		begin
-			insert into [Open].[FlowFormNormalized] (ElementId, ElementName, ParentId, Control) 
+			exec @elementLabel = [Open].[GetElementPropertyByCode] @elementId, 'Label'
+				 
+			if (@elementLabel is null or @elementLabel = '') 
+			begin
+				set @elementLabel = @elementName 
+			end
+			
+			set @elementLabel = (select replace(@elementLabel, N'’', '`'))
+			set @elementLabel = (select replace(@elementLabel, N'''', '`'))
+			 
+			insert into [Open].[FlowFormNormalized] (ElementId, ElementName, ElementLabel, ParentId, Control) 
 			values 
-			(@elementId, @elementName, @newParentElementId, @controlName)	
+			(@elementId, @elementName, @elementLabel, @newParentElementId, @controlName)	
 			
 			exec  [Open].[GetFlowChildElement] @elementId, @elementId, @level
 		end

@@ -33,13 +33,8 @@ BEGIN
 					  	  
 			set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
-					  replace value of (/FormComponentItem[1]/@z:Id)  with sql:variable("@elementId")') 
-					  
-			set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
-					declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
-					 declare namespace d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions";
-					  replace value of (/d5p1:Question[1]/@z:Id)  with sql:variable("@elementId")') 
-					  
+					  replace value of (//@*:Id) [1]  with sql:variable("@elementId")') 
+  
 			return @question
 
 END
