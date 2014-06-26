@@ -24,9 +24,7 @@ BEGIN
 
 	if (@control = 'TextBox')
 	begin
-	
-	exec @question = [Open].[ConvertTextBoxToQuestion] @question,  @elementId	
-					  
+		exec @question = [Open].[ConvertTextBoxToQuestion] @question,  @elementId				  
 	end
 	
 	if (@control = 'RadioList')
@@ -42,6 +40,8 @@ BEGIN
 	
 		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					  replace value of (//@*:type) [1]  with "d5p1:DropdownListInputQuestion"')
+		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					  replace value of (/*:KeyValueOfQuestionstringHQ4y65Wg/*:Key/@*:type) [1]  with "d5p1:DropdownListInputQuestion"')
 					  
 	end
 	
