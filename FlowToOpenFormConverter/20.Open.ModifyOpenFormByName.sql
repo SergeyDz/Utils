@@ -24,7 +24,7 @@ BEGIN
 	
 	DECLARE sectionCursor CURSOR FOR
 	select ElementId from [Open].[FlowFormNormalized]  
-	where Control = 'Section' 
+	where Control = 'Section'
 	order by Id
 	
 	declare @elementId int 
