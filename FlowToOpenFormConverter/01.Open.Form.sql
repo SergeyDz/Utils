@@ -282,32 +282,34 @@ insert into [Open].[Form] (Code, Name, Value)
 							<d6p1:Value>Name</d6p1:Value>
 			</d6p1:KeyValueOfQuestionstringHQ4y65Wg>')
 			
-			--inject default template
+--inject default template
 insert into [Open].[Form] (Code, Name, Value) 
 	values
 	('QueryIntegrationTemplate',
 	 'QueryIntegrationTemplate',
-		'<QueryIntegration 
-		xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
-		xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations">
-	<Id xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">1</Id>
-	<SchemaVersion xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">5</SchemaVersion>
-	<DatasourceId>1</DatasourceId>
-	<IgnoreClientMatterSecurity>false</IgnoreClientMatterSecurity>
-	<Name>FlowDropDown</Name>
-	<QueryBuilder i:type="SqlQueryBuilder">
-		<Columns xmlns:d3p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Datasources">
-			<d3p1:Column>
-				<d3p1:Name>Key</d3p1:Name>
-				<d3p1:Type>System.String</d3p1:Type>
-			</d3p1:Column>
-			<d3p1:Column>
-				<d3p1:Name>Value</d3p1:Name>
-				<d3p1:Type>System.String</d3p1:Type>
-			</d3p1:Column>
-		</Columns>
-		<Expression>select Code As [Key], Name as Value from [Global].[Country]</Expression>
-	</QueryBuilder>
-	<QueryIntegrationObjectType>None</QueryIntegrationObjectType>
-	<QueryIntegrationType>KeyValue</QueryIntegrationType>
-</QueryIntegration>')
+	 '<d2p1:QueryIntegration xmlns = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms" 
+		xmlns:d5p1 = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Datasources"
+		xmlns:i="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/"
+		xmlns:d2p1 = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations">
+	  <Id xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">989</Id>
+      <SchemaVersion xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">5</SchemaVersion>
+      <d2p1:DatasourceId>2</d2p1:DatasourceId>
+      <d2p1:IgnoreClientMatterSecurity>false</d2p1:IgnoreClientMatterSecurity>
+      <d2p1:Name>Global.Country</d2p1:Name>
+      <d2p1:QueryBuilder i:type="d2p1:SqlQueryBuilder">
+        <d2p1:Columns xmlns:d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Datasources">
+          <d5p1:Column>
+            <d5p1:Name>Key</d5p1:Name>
+            <d5p1:Type>System.String</d5p1:Type>
+          </d5p1:Column>
+          <d5p1:Column>
+            <d5p1:Name>Value</d5p1:Name>
+            <d5p1:Type>System.String</d5p1:Type>
+          </d5p1:Column>
+        </d2p1:Columns>
+        <d2p1:Expression>select Code As [Key], Name as [Value] from Global.Country</d2p1:Expression>
+      </d2p1:QueryBuilder>
+      <d2p1:QueryIntegrationObjectType>None</d2p1:QueryIntegrationObjectType>
+      <d2p1:QueryIntegrationType>KeyValue</d2p1:QueryIntegrationType>
+    </d2p1:QueryIntegration>')

@@ -44,12 +44,14 @@ e.IsDeleted >= 0 and c.Name in ('ComboBox', 'RadioList')
 		BEGIN		
 				set @query = (select top 1 Value from [Open].[Form] where Code = 'QueryIntegrationTemplate')
 				
-				set @query.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations";
-					replace value of (/QueryIntegration/Name/text()) [1]  with sql:variable("@tableName")')
+				set @query.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					declare namespace d2p1 = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations";
+					replace value of (/*:QueryIntegration/*:Name/text()) [1]  with sql:variable("@tableName")')
 				
 				set @selectScript = ('select Code As [Key], Name as [Value] from ' + @tableName)
-				set @query.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations";
-					replace value of (/QueryIntegration/QueryBuilder/Expression/text()) [1]  with sql:variable("@selectScript")')
+				set @query.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					declare namespace d2p1 = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations";
+					replace value of (/*:QueryIntegration/*:QueryBuilder/*:Expression/text()) [1]  with sql:variable("@selectScript")')
 				
 				set @finalProcedureScript = 'delete [dbo].[QueryIntegrations] where Name =''' + @tableName + ''' '
 				set @finalProcedureScript = @finalProcedureScript + ' insert into [dbo].[QueryIntegrations] 

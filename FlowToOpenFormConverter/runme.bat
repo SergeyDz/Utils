@@ -31,7 +31,7 @@ TIME /T >>log.txt
 TIME /T >>err.txt
                                                                    
 
-for  %%f IN ("%rootDirectory%*.*.sql") do (echo %%f 
+for  %%f IN ("%rootDirectory%??.Open.*.sql") do (echo %%f 
 echo ----- %%f ----- >>log.txt
 echo ----- %%f ----- >>err.txt
 IF %%~zf GTR 2 "%isql%" -S %sourceServer%  -d %sourceDB% -r1 -e  -i "%%f" >>log.txt  2>>err.txt)
@@ -71,7 +71,7 @@ IF %%~zf GTR 2 "%isql%"  -S %targetServer%  -d %targetDB% -r1 -e -i "%%f">>log.t
 if not "%errorlevel%" == "0" set BatchExitCode=%errorlevel%
 ::pause
 
-for  %%f IN ("%rootDirectory%PostBuild*.sql") do (echo %%f 
+for  %%f IN ("%rootDirectory%PostBuild.*.sql") do (echo %%f 
 echo ----- %%f ----- >>log.txt
 echo ----- %%f ----- >>err.txt
 IF %%~zf GTR 2 "%isql%"  -S %targetServer%  -d %targetDB% -v formname=%targetFormName%  -i "%%f"  >>log.txt  2>>err.txt)
