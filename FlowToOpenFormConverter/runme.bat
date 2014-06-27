@@ -2,7 +2,7 @@
 
 ::Here is source connection information - Flow Database
 set sourceServer=fgsqlkiev-02.fg.local\dev
-set sourceDB=_CCNet_Dev_Nutter
+set sourceDB=Flow_OMM_Dev
 
 ::Here is target connection information - Open Database
 set targetServer=fgsqlkiev-02.fg.local\dev

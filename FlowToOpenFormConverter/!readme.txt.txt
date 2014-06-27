@@ -1,6 +1,6 @@
                CompliGuard Flow UI Form to Intapp Open Form CONVERTER 
-                              Version 1.0.1
-                              June 25, 2014
+                              Version 1.0.2
+                              June 27, 2014
 
 ----------------------------------------------------------------------------
 Overview
@@ -32,8 +32,22 @@ INSTALL and RUN
 	9.3 Save Form. 
 	! Please, note - before You will not save Intapp Open form from application, changes will not APPLY to newly created requests. 
 	9.4 Create new request. 
+10. NEW !!! (1.0.2)
+	10.1 Inside Administration\System\DataSources - "add new datasource"
+	10.2 Name = "Flow" !!! WARNING !!! this mane should be equal to Flow !!!
+	10.3 Add connection string to your Flow database
 	
 10. Enjoy
+	
+	
+----------------------------------------------------------------------------
+Version 1.0.2 27/06/2014 (stable)
+----------------------------------------------------------------------------	
+New Features:
+- Grid columns with corresponding types
+- Skipped deleted sections and elements
+- Combo Box content from Flow using Integrations
+	
 	
 ----------------------------------------------------------------------------
 Version 1.0.1 25/06/2014 (stable)
