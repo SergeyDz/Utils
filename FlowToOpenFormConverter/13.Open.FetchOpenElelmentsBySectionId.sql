@@ -24,7 +24,10 @@ BEGIN
 	
 	DECLARE elementCursor CURSOR FOR
 	select ElementId, ElementName, ElementLabel, Control from [Open].[FlowFormNormalized] 
-	where ParentId = @SectionId
+	where ParentId = @SectionId 
+	--DEBUG
+	--and ElementId in( 283, 237) 
+	--GEBUG
 	order by id
 	
 	declare @elementId int 

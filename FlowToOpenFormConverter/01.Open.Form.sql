@@ -5,13 +5,15 @@ end
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[Form]'))
+IF EXISTS (SELECT * FROM sys.tables WHERE object_id = OBJECT_ID(N'[Open].[Form]'))
+drop table [Open].[Form]
 	create table [Open].[Form] 
 	(
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Code] [varchar](255) NOT NULL,
 		[Name] [varchar](255) NULL,
-		[Value] [xml] 
+		[Value] [xml] ,
+		[CreatedOn] DateTime
 	)
 	
 GO
@@ -22,7 +24,8 @@ create table [Open].[FormDefinitions]
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Code] [varchar](255) NOT NULL,
 		[Name] [varchar](255) NULL,
-		[Value] [varchar] (MAX) 
+		[Value] [varchar] (MAX) ,
+		[CreatedOn] DateTime
 	)
 	
 GO
@@ -36,7 +39,10 @@ create table [Open].[FlowFormNormalized]
 	ElementName varchar(2000),
 	ElementLabel varchar(max),
 	ParentId int,
-	Control varchar(255)
+	Control varchar(255),
+	SourceIntegration varchar(250),
+	EntityCode varchar(250),
+	BindingPath varchar(2000)
 )
 
 IF NOT EXISTS(select * FROM sys.views where name = 'getNewID')
@@ -275,3 +281,33 @@ insert into [Open].[Form] (Code, Name, Value)
 							</d6p1:Key>
 							<d6p1:Value>Name</d6p1:Value>
 			</d6p1:KeyValueOfQuestionstringHQ4y65Wg>')
+			
+			--inject default template
+insert into [Open].[Form] (Code, Name, Value) 
+	values
+	('QueryIntegrationTemplate',
+	 'QueryIntegrationTemplate',
+		'<QueryIntegration 
+		xmlns:i="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations">
+	<Id xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">1</Id>
+	<SchemaVersion xmlns="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model">5</SchemaVersion>
+	<DatasourceId>1</DatasourceId>
+	<IgnoreClientMatterSecurity>false</IgnoreClientMatterSecurity>
+	<Name>FlowDropDown</Name>
+	<QueryBuilder i:type="SqlQueryBuilder">
+		<Columns xmlns:d3p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Datasources">
+			<d3p1:Column>
+				<d3p1:Name>Key</d3p1:Name>
+				<d3p1:Type>System.String</d3p1:Type>
+			</d3p1:Column>
+			<d3p1:Column>
+				<d3p1:Name>Value</d3p1:Name>
+				<d3p1:Type>System.String</d3p1:Type>
+			</d3p1:Column>
+		</Columns>
+		<Expression>select Code As [Key], Name as Value from [Global].[Country]</Expression>
+	</QueryBuilder>
+	<QueryIntegrationObjectType>None</QueryIntegrationObjectType>
+	<QueryIntegrationType>KeyValue</QueryIntegrationType>
+</QueryIntegration>')
