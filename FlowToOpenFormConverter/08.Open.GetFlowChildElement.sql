@@ -22,15 +22,16 @@ BEGIN
 	set @level = @level + 1
 	
 	declare @elementId int
-	declare @elementName varchar(2000)
-	declare @controlName varchar(250)
-	declare @elementLabel varchar(max) 
+	declare @elementName nvarchar(2000)
+	declare @controlName nvarchar(250)
+	declare @elementLabel nvarchar(max) 
 	
 	declare childrenCursor cursor LOCAL  for 
 	select e.id, e.Name, c.Code from UI.Element e 
 	inner join UI.Form f on f.Id = e.FormId
 	inner join UI.Control c on c.ID = e.ControlId
 	where e.ParentId = @parentElementId
+	order by e.Row, e.Id 
 	
 	open childrenCursor
 	
@@ -55,6 +56,8 @@ BEGIN
 			
 			set @elementLabel = (select replace(@elementLabel, N'’', '`'))
 			set @elementLabel = (select replace(@elementLabel, N'''', '`'))
+			 
+			exec @elementLabel = [Open].[StripLowAscii] @string = @elementLabel
 			 
 			insert into [Open].[FlowFormNormalized] (ElementId, ElementName, ElementLabel, ParentId, Control) 
 			values 
