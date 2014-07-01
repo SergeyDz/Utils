@@ -17,29 +17,51 @@ INSTALL and RUN
 3. Set "sourceServer" \ "sourceDB" connection settings to your Flow database. Note: only Windows authentication to DB supported
 4. Set "targetServer" \ "targetDB" connection settings to your Open database. Note: only Windows authentication to DB supported
 5. Set "targetFormName" to existed Open Form.Name. 
-	5.1 If form not exists - please create it. 
-	5.2 Just to advise - please ensure Workflow Diagram are linked to this form, and request with this form can b created successfully. 
-	5.3 Target Form will be overridden with new XML from Flow. All existed form content will be lost.
+	5.1. If form with such name not exists - it will be created.
+	5.2. If form with such name is exists - it will be overridden with new data.
+	WARNING: Target Form will be overridden with new XML from Flow. All existed form content will be lost.
 
 6. RUN "runme.bat" file 
 
 7. Ensure err.log file do not content any error messages. It should contains only trace lines starting "------" for each of calling scripts 
 8. Ensure "_OpenFormXmlDataOutput.sql" file was created. It contains XML for Intapp Open form.
 
-9. Inside Intapp Open application
-	9.1 Navigate to Forms 
-	9.2 Open your "targetFormName"
-	9.3 Save Form. 
+9. 	new -(1.0.3)(If UI Form is new and never used before) - inside Intapp Open application
+	9.1 Navigate Workflows
+	9.2 Open actual Workflow diagram
+	9.3 Open Deployment tab
+	9.4 Under "Form Definition" - select your form name.  
+	
+10. Inside Intapp Open application
+	10.1 Navigate to Forms 
+	10.2 Open your "targetFormName"
+	10.3 Save Form. 
 	! Please, note - before You will not save Intapp Open form from application, changes will not APPLY to newly created requests. 
-	9.4 Create new request. 
-10. NEW !!! (1.0.2)
-	10.1 Inside Administration\System\DataSources - "add new datasource"
-	10.2 Name = "Flow" !!! WARNING !!! this mane should be equal to Flow !!!
-	10.3 Add connection string to your Flow database
+	10.4 Create new request. 
+11. new -(1.0.2) Add data source to source Flow database. 
+	11.1 Inside Administration\System\DataSources - "add new datasource"
+	11.2 Name = "Flow" 
+	!!! WARNING !!! this mane should be always equal to "Flow" !!!
+	11.3 Add connection string to your Flow database
 	
-10. Enjoy
+12. Enjoy
 	
 	
+----------------------------------------------------------------------------
+Version 1.0.3 01/07/2014 (stable)
+----------------------------------------------------------------------------	
+New Features:
+- Added ability to add new Form by name automatically. 
+- Integration Query script optimized
+- Form Definitions script optimized
+
+Features are coming soon:
+- Radio List with list name options
+- "User" lookups 
+- static Required property
+- static Lock property
+
+
 ----------------------------------------------------------------------------
 Version 1.0.2 27/06/2014 (stable)
 ----------------------------------------------------------------------------	
