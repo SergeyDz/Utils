@@ -35,7 +35,13 @@ where
 f.Name = 'Request Editor' AND
 e.IsDeleted >= 0 and c.Name in ('ComboBox', 'RadioList')
 
-
+	select '
+		declare @xml varchar(max)
+		declare @datasourceId int = (select Id from Datasources where Name = ''Flow'')
+		declare @queryName varchar(255)	
+	'
+	set @finalProcedureScript = ''
+	
 	open domainEntityCursor
 	
 	FETCH NEXT FROM domainEntityCursor 
@@ -53,13 +59,19 @@ e.IsDeleted >= 0 and c.Name in ('ComboBox', 'RadioList')
 					declare namespace d2p1 = "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Integrations";
 					replace value of (/*:QueryIntegration/*:QueryBuilder/*:Expression/text()) [1]  with sql:variable("@selectScript")')
 				
-				set @finalProcedureScript = 'delete [dbo].[QueryIntegrations] where Name =''' + @tableName + ''' '
-				set @finalProcedureScript = @finalProcedureScript + ' insert into [dbo].[QueryIntegrations] 
-					(QueryIntegrationType, Name, DevelopmentDefinitionXml, TestDefinitionXml, ProductionDefinitionXml, Datasource_Id, ModifiedBy_Id, ModifiedOn, CreatedBy_Id, CreatedOn)
-					values 
-					(''KeyValue'', '''+ @tableName +''' ,'''+cast(@query as varchar(max))+''', '''+cast(@query as varchar(max))+''', '''+cast(@query as varchar(max))+
-					''', (select top 1 Id from DataSources  where Name = ''Flow''), 1, Getdate(), 1, GetDate())'
-				
+				set @finalProcedureScript = @finalProcedureScript +  '
+					set @xml = ''' + Convert(nvarchar(MAX), @query) + '''
+					set @queryName = '''+@tableName+'''
+					if EXISTS (select Id from  [dbo].[QueryIntegrations] where Name = @queryName)
+						update [dbo].[QueryIntegrations] 
+						set DevelopmentDefinitionXml = @xml, TestDefinitionXml = @xml, ProductionDefinitionXml = @xml, Datasource_Id = @datasourceId, ModifiedBy_Id = 1, ModifiedOn = GETDATE()
+						WHERE Name = @queryName
+					ELSE
+						INSERT INTO [dbo].[QueryIntegrations] 
+						(QueryIntegrationType, Name, DevelopmentDefinitionXml, TestDefinitionXml, ProductionDefinitionXml, Datasource_Id, ModifiedBy_Id, ModifiedOn, CreatedBy_Id, CreatedOn)
+						 VALUES 
+						(''KeyValue'', @queryName , @xml, @xml, @xml, @datasourceId, 1, Getdate(), 1, GetDate())
+				'
 				
 				select  @finalProcedureScript
 					

@@ -2,15 +2,14 @@
 
 ::Here is source connection information - Flow Database
 set sourceServer=fgsqlkiev-02.fg.local\dev
-set sourceDB=Flow_OMM_Dev
+set sourceDB=_CCNet_Dev_Nutter
 ::Here is target connection information - Open Database
 set targetServer=fgsqlkiev-02.fg.local\dev
 set targetDB=opendb_sdzyuban
 
-:: !Form with such name should exists in Open Database!
-:: !Form will be overridden with new meta data. 
+:: !Existing Form will be overridden with new meta data. 
 :: WARNING: All configuration inside existing Open form will be LOST !
-set targetFormName="Test Form 2"
+set targetFormName="Test Form Nutter"
 
 
 set rootDirectory=%~dp0
