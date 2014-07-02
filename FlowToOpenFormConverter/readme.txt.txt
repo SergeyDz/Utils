@@ -1,14 +1,12 @@
                CompliGuard Flow UI Form to Intapp Open Form CONVERTER 
-                              Version 1.0.2
-                              June 27, 2014
+                              Version 1.0.3
+                              July 01, 2014
 
 ----------------------------------------------------------------------------
 Overview
 ----------------------------------------------------------------------------
-
-This simple SQL based script will convert your source Flow UI form to Intapp Open UI form. 
-						!For demo purposes only!
-
+This simple SQL based script will convert your source Flow UI form to target Intapp Open UI form. 
+						
 ----------------------------------------------------------------------------
 INSTALL and RUN
 ----------------------------------------------------------------------------
@@ -18,7 +16,7 @@ INSTALL and RUN
 4. Set "targetServer" \ "targetDB" connection settings to your Open database. Note: only Windows authentication to DB supported
 5. Set "targetFormName" to existed Open Form.Name. 
 	5.1. If form with such name not exists - it will be created.
-	5.2. If form with such name is exists - it will be overridden with new data.
+	5.2. If form with such name exists - it will be overridden with new data.
 	WARNING: Target Form will be overridden with new XML from Flow. All existed form content will be lost.
 
 6. RUN "runme.bat" file 
