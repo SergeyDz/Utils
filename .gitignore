@@ -213,3 +213,11 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#Error and Log files
+err.txt
+log.txt
+
+
+#Temporary SQL files
+_*.sql
