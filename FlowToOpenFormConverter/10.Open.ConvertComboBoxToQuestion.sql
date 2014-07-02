@@ -37,6 +37,10 @@ BEGIN
 			set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					 declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
 					 declare namespace d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions";
+					 insert sql:variable("@dataSourceIntegrationDefinition") into (/*:KeyValueOfQuestionstringHQ4y65Wg/*:Key) [1]')
+			set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
+					 declare namespace z="http://schemas.microsoft.com/2003/10/Serialization/";
+					 declare namespace d5p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions";
 					 declare namespace d6p1="http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms.Questions.Integrations";
 					  replace value of (//child::*:DatasourceIntegrationDefinition/*:IntegrationId/text()) [1]  with sql:variable("@entityName")')
 		end
