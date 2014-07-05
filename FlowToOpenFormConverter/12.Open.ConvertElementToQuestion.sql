@@ -37,8 +37,7 @@ BEGIN
 	
 	if (@control = 'ComboBox')
 	begin	 
-	 	set @controlTypeDefinition  = 'd5p1:DropdownListInputQuestion'
-		
+	 	
 		exec @question = [Open].[ConvertComboBoxToQuestion] @question,  @elementId
 		
 		
@@ -76,7 +75,8 @@ BEGIN
 	end	
 	
 	--NOTE: Radio List has internal type processing. See [Open].[ConvertRadioToQuestion]
-	if(@control in ('DatePicker','Label', 'ComboBox', 'NumberEditor' , 'PercentEditor' ,'MoneyEditor'))	
+	--NOTE: Combo Box has internal type processing for smart lookup (AutoCompleteSingleValueInputQuestion)
+	if(@control in ('DatePicker','Label', 'NumberEditor' , 'PercentEditor' ,'MoneyEditor'))	
 	begin
 		set @question.modify('declare default element namespace "http://schemas.datacontract.org/2004/07/IntApp.Wilco.Model.Forms";
 					  replace value of (//@*:type) [1]  with sql:variable("@controlTypeDefinition") ')
