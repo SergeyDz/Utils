@@ -1,0 +1,61 @@
+<!-- Install jQuery and underscore -->
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+
+<input type = 'Button' id = 'Authorize' Value='Authorize'/>
+<input type = 'Button' id = 'GetClientByCode' Value='Get Client By Id'/>
+
+<!-- Create your template (Note the type="text/html") -->
+<script type="text/javascript">
+(function (window) {
+	var TFG = function(){};
+	TFG.AnalyzeClient = function(){};
+	TFG.tokenName = '';
+	TFG.token = '';
+	jQuery.support.cors = true;
+	
+	
+	TFG.AnalyzeClient = $.extend(TFG.AnalyzeClient.prototype, {
+		baseUrl : 'http://cgqakiev.fg.local/Analyze/api',
+		
+		GetClientById : function(id)
+		{
+			$.ajax({
+			  type: "GET",
+			  async: true,
+			  xhrFields: {  withCredentials: true  },
+			  url: this.baseUrl + '/clients/' + id + '?format=json',
+			  dataType: 'json',
+			  crossDomain : true,
+			  processData: true,
+			  success : function(d) {alert('a')},
+			  error: function(jqXHR, textStatus, errorThrown) { alert("Error: " + textStatus + " " + errorThrown);}
+			});
+		}, 
+		
+		Authorize : function(id)
+		{
+			$.ajax({
+			  type: "POST",
+			  url: this.baseUrl + '/auth/credentials/',
+			  data: {'User' : 'admin' , 'Password' : 'pass2app'},
+			  success: function(data) { 
+									var value = escape(data.CookieValue) +  "; expires=" + data.ExpiresAt;
+									document.cookie = data.CookieName + "=" + value;
+									TFG.tokenName = data.CookieName;
+									TFG.token = value;
+								},
+			  error: function(jqXHR, textStatus, errorThrown) { alert("Error: " + textStatus + " " + errorThrown);},
+			  dataType: 'json'
+			});
+		}
+	});
+	
+	$('#GetClientByCode').click(function() { TFG.AnalyzeClient.GetClientById(1); });
+	$('#Authorize').click(function() { TFG.AnalyzeClient.Authorize(); });
+	
+	this.TFG = TFG;
+}).apply(window);
+</script>
+
