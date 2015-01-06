@@ -1,0 +1,21 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="SaveOutput.tt" #>
+<#
+	Dictionary<string, string> types = new Dictionary<string, string>() 
+	{ 
+		{"Address", "Address"},
+		{"AddressType", "AddressType"},
+		{"Client", "Client"},
+		{"EntityType", "EntityType"},
+		{"ClientStatus", "ClientStatus"},
+		{"Individual", "Individual"},
+		{"ContactType", "ContactType"},
+	};
+
+	string lib = "Stikeman.ServiceModel.Flow.dll";
+	foreach (KeyValuePair<string, string> pair in types)
+	{
+		GenerateDomainModelObject(lib, pair.Key, pair.Value);
+	}
+#>
